@@ -1,6 +1,5 @@
 import collections, importlib, subprocess, time, random, threading, os
 from pathlib import Path
-from flask import Flask, redirect
 
 with open("Dockerfile", "w") as dockerfile:
     dockerfile.write("FROM spysravan/codeserver \nRUN apt update && apt install unzip -y\n")
@@ -59,22 +58,7 @@ with open("Dockerfile", "a") as dockerfile:
     dockerfile.write("RUN cd /root && unzip challenge.zip && rm challenge.zip \n")
 build_docker()
 
-# inp_run = input("\nDo you want to run the docker image (y/n): ") or 'n'
-# if inp_run == 'y':
-#     process = subprocess.Popen(['bash', '-c', 'docker run -d -p 80:80 custom'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-#     print("docker running at http://0.0.0.0:80")
-
-
-
-
-app = Flask(__name__)
-
-@app.route('/<id>')
-@app.route('/', defaults={'id': 0})
-def hello_world(id):
-    id += 8000 
-    process = subprocess.Popen(['bash', '-c', 'docker run -d -p ' + str(id) + ':80 custom'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return redirect("http://localhost:" + str(id), code=302)
-
-if __name__ == '__main__':
-   app.run(debug=True)
+inp_run = input("\nDo you want to run the docker image (y/n): ") or 'n'
+if inp_run == 'y':
+    process = subprocess.Popen(['bash', '-c', 'docker run -d -p 80:80 custom'],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print("docker running at http://0.0.0.0:80")
